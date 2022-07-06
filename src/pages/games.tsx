@@ -1,7 +1,6 @@
 import { BodyPage } from "../components/pattern/BodyPage";
 
-
-export default function Home() {
+export default function Games() {
   return (
     <BodyPage>
       
