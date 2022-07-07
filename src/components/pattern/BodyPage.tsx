@@ -18,7 +18,7 @@ export function BodyPage({ children }: BodyPageProps) {
         mx="auto"
         px="6"
       >
-        <Sidebar />
+        {/* <Sidebar /> */}
 
         {children}
         
