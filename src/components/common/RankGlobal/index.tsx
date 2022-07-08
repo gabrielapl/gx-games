@@ -10,7 +10,7 @@ export function RankGlobal() {
       px="8"
       py="5"
     >
-      <Heading size="md" mb="4">Rank Global.</Heading>
+      <Heading size="md" mb="4">Rank Global...</Heading>
       <List spacing={4} >
         <PositionRank />
         <PositionRank />
