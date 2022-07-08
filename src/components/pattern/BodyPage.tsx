@@ -19,8 +19,11 @@ export function BodyPage({ children }: BodyPageProps) {
         px="6"
       >
         {/* <Sidebar /> */}
-
-        {children}
+        <Box
+          w="100%"
+        >
+          {children}
+        </Box>
         
       </Flex>
     </Box>
