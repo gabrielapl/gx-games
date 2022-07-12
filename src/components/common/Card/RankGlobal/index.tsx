@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Heading, List, Text } from "@chakra-ui/react";
 import { PositionRank } from "./positionRank";
 
-export function RankGlobal() {
+export function RankGlobalCard() {
   return (
     <Box
       bg='purple.900'
