@@ -1,16 +1,17 @@
-.card__content {
+.card {
   position: relative;
   width: 100%;
-  aspect-ratio: 1/1;
   transform-style: preserve-3d;
+  aspect-ratio: 1/1;
   transition: transform 600ms ease-in-out;
+  
 }
 
-.card__content--flipped {
+.card-flipped {
   transform: rotateY(180deg);
 }
 
-.card__face {
+.card-face {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -18,8 +19,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8rem;
   cursor: pointer;
+  border-radius: 20%;
 }
 
 .card__faceFront {
