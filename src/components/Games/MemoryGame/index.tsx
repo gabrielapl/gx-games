@@ -1,35 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FinishedGame } from "../../common/FinishedGame";
 import { Card } from "./Card";
+import { useMemoryGame } from "./useMemoryGame";
 
 export function MemoryGame() {
+  
+  const { generateGame, totalMatches } = useMemoryGame();
 
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      flipped: false,
-      text: "😘",
-      combined: false
-    },
-    {
-      id: 2,
-      flipped: false,
-      text: "😘",
-      combined: false
-    },
-    {
-      id: 3,
-      flipped: false,
-      text: "🥬",
-      combined: false
-    },
-    {
-      id: 4,
-      flipped: false,
-      text: "🥬",
-      combined: false
-    }
-  ]);
+  const [cards, setCards] = useState(generateGame());
 
   const [firstCardSelected, setFirstCardSelected] = useState<any>(null);
   const [secondCardSelected, setSecondCardSelected] = useState<any>(null);
@@ -39,9 +18,8 @@ export function MemoryGame() {
   const unflip = useRef(false);
   const [matches, setMatches] = useState(0);
 
-  
 
-  function handleFlipp(id: number) {
+  function handleFlipp(id: string) {
     const newStateCards = cards.map((card) => {
       // Se o id do cartão não for o id clicado, não faz nada
       if (card.id !== id) return card;
@@ -87,8 +65,19 @@ export function MemoryGame() {
     setCards(newStateCards);
   }
 
+  /* useEffect(() => {
+    setCards(generateGame());
+  }); */
+
+  if(matches == totalMatches) {
+    return <FinishedGame />
+  }
+
   return (
-    <Flex
+    <>
+      <h1>{totalMatches}</h1>
+
+      <Flex
       display="grid"
       gridTemplateColumns="repeat(4, 1fr)"
       gap="8"
@@ -99,7 +88,10 @@ export function MemoryGame() {
           <Card id={card.id} flipped={card.flipped} combined={card.combined} text={card.text} handleFlipp={(id) => handleFlipp(id)} />
         ))
       }
+
     </Flex>
+    </>
+
   )
 }
 

@@ -4,8 +4,8 @@ import styles from './styles.module.css';
 
 interface CardProps {
   flipped: boolean;
-  handleFlipp: (id: number) => void;
-  id: number;
+  handleFlipp: (id: string) => void;
+  id: string;
   text: string;
   combined: boolean;
 }
