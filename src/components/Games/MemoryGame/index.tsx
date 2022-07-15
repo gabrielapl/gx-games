@@ -7,53 +7,84 @@ export function MemoryGame() {
   const [cards, setCards] = useState([
     {
       id: 1,
-      flipped: false
+      flipped: false,
+      text: "😘",
+      combined: false
     },
     {
       id: 2,
-      flipped: false
+      flipped: false,
+      text: "😘",
+      combined: false
     },
     {
       id: 3,
-      flipped: false
+      flipped: false,
+      text: "🥬",
+      combined: false
     },
     {
       id: 4,
-      flipped: false
+      flipped: false,
+      text: "🥬",
+      combined: false
     }
   ]);
 
   const [firstCardSelected, setFirstCardSelected] = useState<any>(null);
   const [secondCardSelected, setSecondCardSelected] = useState<any>(null);
 
+  const a = useRef<any>(null);
+  const b = useRef<any>(null);
+  const unflip = useRef(false);
+  const [matches, setMatches] = useState(0);
+
+  
+
   function handleFlipp(id: number) {
-    const newCards = cards.map(card => {
+    const newStateCards = cards.map((card) => {
+      // Se o id do cartão não for o id clicado, não faz nada
+      if (card.id !== id) return card;
+      // Se o cartão já estiver virado, não faz nada
+      if (card.flipped) return card;
 
-      if(card.id != id) return card;
-
-      if(!firstCardSelected) {
-        setFirstCardSelected(card);
-      }
-      
-      if(!secondCardSelected) {
-        setSecondCardSelected(card);
-      }
-
-      if(firstCardSelected && secondCardSelected) {
-        
-
-        setFirstCardSelected(null);
-        setSecondCardSelected(null);
+      // Desviro possíveis cartas erradas
+      if (unflip.current && a.current && b.current) {
+        a.current.flipped = false;
+        b.current.flipped = false;
+        a.current = null;
+        b.current = null;
+        unflip.current = false;
       }
 
-      return {
-        ...card,
-        flipped: !card.flipped
+      // Virar o card
+      card.flipped = true;
+
+      // Configura primeiro e segundo cartão clicados
+      if (a.current === null) {
+        a.current = card;
+      } else if (b.current === null) {
+        b.current = card;
       }
-      
+
+      // Se eu tenho os dois cartão virados
+      // Posso checar se estão corretos
+      if (a.current && b.current) {
+        if (a.current.text === b.current.text) {
+          // A pessoa acertou
+          a.current = null;
+          b.current = null;
+          setMatches((m) => m + 1);
+        } else {
+          // A pessoa errou
+          unflip.current = true;
+        }
+      }
+
+      return card;
     });
 
-    setCards(newCards);
+    setCards(newStateCards);
   }
 
   return (
@@ -65,9 +96,51 @@ export function MemoryGame() {
     >
       {
         cards.map(card => (
-          <Card id={card.id} flipped={card.flipped} handleFlipp={(id) => handleFlipp(id)} />
+          <Card id={card.id} flipped={card.flipped} combined={card.combined} text={card.text} handleFlipp={(id) => handleFlipp(id)} />
         ))
       }
     </Flex>
   )
 }
+
+/* 
+const newCards = cards.map(card => {
+
+      if(card.id != id) return card;
+
+      if(card.flipped) return card;
+
+      if (a.current && b.current) {
+        a.current = null;
+        b.current = null;
+        card.flipped = false;
+        debugger
+        return card;
+      }
+
+      card.flipped = true;
+
+      if(a.current == null) {
+        debugger
+        a.current = card;
+      } else if(b.current == null) {
+        debugger
+        b.current = card;
+      }
+      
+      if(a.current && b.current) {
+        debugger
+        if(a.current.text == b.current.text) {
+        } else {
+          debugger
+          card.flipped = true;
+        }
+
+        
+      }
+
+      return card
+    });
+
+    setCards(newCards);
+*/
