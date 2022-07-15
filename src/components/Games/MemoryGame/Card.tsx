@@ -6,14 +6,16 @@ interface CardProps {
   flipped: boolean;
   handleFlipp: (id: number) => void;
   id: number;
+  text: string;
+  combined: boolean;
 }
 
-export function Card({ flipped, handleFlipp, id }: CardProps) {
+export function Card({ flipped, handleFlipp, id, text, combined }: CardProps) {
 
   return (
-    <div className={`${styles.card} ${flipped ? styles['card-flipped'] : ""}`} onClick={() => handleFlipp(id)}>
+    <div className={`${styles.card} ${flipped ? styles['card-flipped'] : ""} ${combined ? styles['card-disabled'] : ""}`} onClick={() => handleFlipp(id)}>
       <div className={`${styles['card-face']} ${styles.card__faceFront}`} >?</div>
-      <div className={`${styles['card-face']} ${styles.card__faceBack}`}>🤞</div>
+      <div className={`${styles['card-face']} ${styles.card__faceBack}`}>{text}</div>
     </div>
   )
 }

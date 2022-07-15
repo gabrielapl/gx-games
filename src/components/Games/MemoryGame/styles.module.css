@@ -33,3 +33,9 @@
   color: var(--color-text-dark);
   transform: rotateY(180deg);
 }
+
+.card-disabled {
+  border-width: 2px;
+  border-color: aqua;
+  border-radius: 20%;
+}
